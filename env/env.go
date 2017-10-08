@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load(os.Getenv("GOPATH") + "/src/github.com/99ridho/come-backend/.env"); err != nil {
 		panic(err)
 	}
 }
