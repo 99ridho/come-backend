@@ -4,6 +4,12 @@
 
 ### Request
 
+#### Endpoint
+
+```
+POST /login
+```
+
 #### Request Header
 
 ```
@@ -25,23 +31,29 @@ Response type : `Content-type: application/json`
 
 HTTP Status Code 200
 
-Parameter | Type
-----------|------
-`message` | `string`
-`token` | `string`
+Parameter | Type | Remark
+----------|------|--------
+`message` | `string` | -
+`token` | `string` | Use this token at your `Authorization` header for requesting a resource from protected endpoint
 
 #### Response if login failed (no request body, password incorrect, not registered, etc)
 
 HTTP Status Code 400, 500
 
-Parameter | Type 
-----------|------
-`error_message` | `string`
-`error_code` | `int`
+Parameter | Type | Remark
+----------|------|--------
+`error_message` | `string` | -
+`error_code` | `int` | -
 
 ## Register
 
 ### Request
+
+#### Endpoint
+
+```
+POST /register
+```
 
 #### Request Header
 
@@ -70,15 +82,15 @@ Response type : `Content-type: application/json`
 
 HTTP Status Code 200
 
-Parameter | Type 
-----------|------
-`message` | `string`
+Parameter | Type | Remark
+----------|------|--------
+`message` | `string` | -
 
 #### Response if register failed (no request body, account already registered)
 
 HTTP Status Code 400, 500
 
-Parameter | Type 
-----------|------
-`error_message` | `string`
-`error_code` | `int`
+Parameter | Type | Remark
+----------|------|--------
+`error_message` | `string` | -
+`error_code` | `int` | -
