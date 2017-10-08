@@ -4,6 +4,7 @@
 
 * Auth : No
 * Request (`Content-Type: application/json`)
+    
     ```
     {
         "email" : "your_email",
@@ -11,9 +12,10 @@
     }
     ```
 * Response (`Content-Type: application/json`)
+    
     ```
     {
-        "status": "status", // depend to login result
+        "status": "status", // depend to login result, "success" or "failed"
         "message": "message", // depend to login result
         "token": "token" // JWT token will present if logged in successfully
     }
