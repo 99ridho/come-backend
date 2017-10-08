@@ -11,6 +11,7 @@ import (
 func NewRouter() *goji.Mux {
 	rootRoute := goji.NewMux()
 	rootRoute.HandleFunc(pat.Post("/login"), handlers.Login)
+	rootRoute.HandleFunc(pat.Post("/register"), handlers.Register)
 
 	routeWithAuth := goji.SubMux()
 	routeWithAuth.Use(middlewares.VerifyToken)

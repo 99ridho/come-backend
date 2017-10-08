@@ -16,9 +16,8 @@ type User struct {
 	FcmToken string `db:"fcm_token"`
 }
 
-func NewUser(id int, username string, email string, password string, fullName string, gender string, fcmToken string) (*User, error) {
+func NewUser(username string, email string, password string, fullName string, gender string, fcmToken string) (*User, error) {
 	user := &User{
-		ID:       id,
 		Username: username,
 		Email:    email,
 		FullName: fullName,
