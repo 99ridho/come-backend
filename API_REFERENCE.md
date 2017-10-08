@@ -12,10 +12,10 @@ Content-type: application/json
 
 #### Request Parameter
 
-Parameter | Type | Required?
-----------|------|----------
-`email` | `string` | yes
-`password` | `string` | yes
+Parameter | Type | Required? | Remark
+----------|------|-----------|--------
+`email` | `string` | yes | -
+`password` | `string` | yes | -
 
 ### Response
 
@@ -25,10 +25,10 @@ Response type : `Content-type: application/json`
 
 HTTP Status Code 200
 
-Parameter | Type | Remark
-----------|------|--------
-`message` | `string` | -
-`token` | `string` | -
+Parameter | Type
+----------|------
+`message` | `string`
+`token` | `string`
 
 #### Response if login failed (no request body, password incorrect, not registered, etc)
 
