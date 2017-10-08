@@ -1,5 +1,25 @@
 # REST API Reference
 
+## TOC
+
+- [REST API Reference](#rest-api-reference)
+  * [Login](#login)
+    + [Request](#request)
+      - [Endpoint](#endpoint)
+      - [Request Header](#request-header)
+      - [Request Parameter](#request-parameter)
+    + [Response](#response)
+      - [Response if logged in successfully](#response-if-logged-in-successfully)
+      - [Response if login failed (no request body, password incorrect, not registered, etc)](#response-if-login-failed-no-request-body-password-incorrect-not-registered-etc)
+  * [Register](#register)
+    + [Request](#request-1)
+      - [Endpoint](#endpoint-1)
+      - [Request Header](#request-header-1)
+      - [Request Parameter](#request-parameter-1)
+    + [Response](#response-1)
+      - [Response if registered successfully](#response-if-registered-successfully)
+      - [Response if register failed (no request body, account already registered)](#response-if-register-failed-no-request-body-account-already-registered)
+
 ## Login
 
 ### Request
