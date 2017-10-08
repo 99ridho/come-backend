@@ -19,7 +19,7 @@ func TestLoginWithUnknownAccount(t *testing.T) {
 		t.Errorf("Status code differs. Expected %d .\n Got %d instead", http.StatusOK, status)
 	}
 
-	jsonExpected := string(`{"message":"user not found","status":"failed","token":""}`)
+	jsonExpected := string(`{"error_message":"user not found","error_code":500`)
 
 	print(rr.Body.String())
 	assert.JSONEq(t, jsonExpected, rr.Body.String(), "Response different")

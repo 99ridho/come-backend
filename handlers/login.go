@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/99ridho/come-backend/env"
+	"github.com/99ridho/come-backend/errors"
 	"github.com/99ridho/come-backend/models"
 	"github.com/dgrijalva/jwt-go"
 )
@@ -17,7 +18,6 @@ type loginRequest struct {
 
 type loginResponse struct {
 	Message string `json:"message"`
-	Status  string `json:"status"`
 	Token   string `json:"token"`
 }
 
@@ -26,7 +26,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	var req loginRequest
 
 	if err := decoder.Decode(&req); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		errors.NewErrorWithStatusCode(http.StatusBadRequest).WriteTo(w)
 		return
 	}
 
@@ -34,18 +34,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	query := "select * from users where email=?"
 
 	if err := models.Dbm.SelectOne(&user, query, req.Email); err != nil {
-		json.NewEncoder(w).Encode(loginResponse{
-			Message: "user not found",
-			Status:  "failed",
-		})
+		errors.NewError("user not found", http.StatusInternalServerError).WriteTo(w)
 		return
 	}
 
 	if err := user.VerifyPassword(req.Password); err != nil {
-		json.NewEncoder(w).Encode(loginResponse{
-			Message: "password incorrect",
-			Status:  "failed",
-		})
+		errors.NewError("password incorrect", http.StatusInternalServerError).WriteTo(w)
 		return
 	}
 
@@ -64,7 +58,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(loginResponse{
 		Message: "logged in",
-		Status:  "success",
 		Token:   tokenString,
 	})
 }
