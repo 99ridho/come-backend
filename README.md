@@ -11,4 +11,4 @@
     go run seeder/seed.go
     go run main.go
     ```
-5. It will run at port 8888
+5. It will run at port : 8888
