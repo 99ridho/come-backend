@@ -26,7 +26,7 @@ func VerifyToken(h http.Handler) http.Handler {
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), "user_id", userId)
+		ctx := context.WithValue(r.Context(), "user_id", int(userId))
 		reqWithContext := r.WithContext(ctx)
 		h.ServeHTTP(w, reqWithContext)
 	}

@@ -16,6 +16,8 @@ func NewRouter() *goji.Mux {
 	routeWithAuth := goji.SubMux()
 	routeWithAuth.Use(middlewares.VerifyToken)
 	// router with auth added here...
+	routeWithAuth.HandleFunc(pat.Post("/change_password"), handlers.ChangePassword)
+	routeWithAuth.HandleFunc(pat.Post("/change_profile"), handlers.ChangeProfile)
 
 	rootRoute.Handle(pat.New("/*"), routeWithAuth)
 	return rootRoute
