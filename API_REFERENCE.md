@@ -3,6 +3,7 @@
 ## TOC
 
 - [REST API Reference](#rest-api-reference)
+  * [TOC](#toc)
   * [Login](#login)
     + [Request](#request)
       - [Endpoint](#endpoint)
@@ -19,7 +20,15 @@
     + [Response](#response-1)
       - [Response if registered successfully](#response-if-registered-successfully)
       - [Response if register failed (no request body, account already registered)](#response-if-register-failed-no-request-body-account-already-registered)
-
+  * [Change Password](#change-password)
+    + [Request](#request-2)
+      - [Endpoint](#endpoint-2)
+      - [Request Header](#request-header-2)
+      - [Request Parameter](#request-parameter-2)
+    + [Response](#response-2)
+      - [Response if change password success](#response-if-change-password-success)
+      - [Response if change password failed (no request body, old password incorrect)](#response-if-change-password-failed-no-request-body-old-password-incorrect)
+      
 ## Login
 
 ### Request
@@ -107,6 +116,51 @@ Parameter | Type | Remark
 `message` | `string` | -
 
 #### Response if register failed (no request body, account already registered)
+
+HTTP Status Code 400, 500
+
+Parameter | Type | Remark
+----------|------|--------
+`error_message` | `string` | -
+`error_code` | `int` | -
+
+## Change Password
+
+### Request
+
+#### Endpoint
+
+```
+POST /change_password
+```
+
+#### Request Header
+
+```
+Authorization: your_jwt_token_obtained_from_login
+Content-type: application/json
+```
+
+#### Request Parameter
+
+Parameter | Type | Required? | Remark
+----------|------|-----------|--------
+`old_password` | `string` | yes | -
+`new_password` | `string` | yes | -
+
+### Response
+
+Response type : `Content-type: application/json`
+
+#### Response if change password success
+
+HTTP Status Code 200
+
+Parameter | Type | Remark
+----------|------|--------
+`message` | `string` | -
+
+#### Response if change password failed (no request body, old password incorrect)
 
 HTTP Status Code 400, 500
 
