@@ -21,7 +21,7 @@ func VerifyToken(h http.Handler) http.Handler {
 			w.WriteHeader(http.StatusUnauthorized)
 			json.NewEncoder(w).Encode(map[string]interface{}{
 				"status":  "unauthorized",
-				"message": "Unauthorized!",
+				"message": err.Error(),
 			})
 			return
 		}
