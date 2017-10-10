@@ -36,7 +36,7 @@ func FetchNearbyPromosFromMyLocation(w http.ResponseWriter, r *http.Request) {
 	// lat, lng, lat
 	query := `
 	SELECT 
-	id,user_id,name,address,latitude,longitude,description,start_date,end_date,allowed_gender,max_slot, 
+	*, 
 	(
 	   6371 *
 	   acos(cos(radians(?)) * 
@@ -48,7 +48,7 @@ func FetchNearbyPromosFromMyLocation(w http.ResponseWriter, r *http.Request) {
 	) AS distance 
 	FROM promos
 	HAVING distance < 5
-	ORDER BY distance LIMIT 0, 20
+	ORDER BY distance ASC
 	`
 
 	var promos []struct {
