@@ -39,12 +39,17 @@ func init() {
 
 	Dbm.TraceOn("[gorm]", log.New(os.Stdout, "myapp:", log.Lmicroseconds))
 	Dbm.AddTableWithName(User{}, "users").SetKeys(true, "ID").AddIndex("EmailIndex", "Btree", []string{"email"}).SetUnique(true)
+	Dbm.AddTableWithName(Promo{}, "promos").SetKeys(true, "ID")
 	Dbm.TraceOff()
 
 }
 
 // Create tables
 func CreateTables() error {
+	if err := Dbm.DropTablesIfExists(); err != nil {
+		return err
+	}
+
 	if err := Dbm.CreateTablesIfNotExists(); err != nil {
 		return err
 	}

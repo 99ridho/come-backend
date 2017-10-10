@@ -13,12 +13,16 @@ func NewRouter() *goji.Mux {
 	rootRoute.HandleFunc(pat.Post("/login"), handlers.Login)
 	rootRoute.HandleFunc(pat.Post("/register"), handlers.Register)
 
-	routeWithAuth := goji.SubMux()
-	routeWithAuth.Use(middlewares.VerifyToken)
-	// router with auth added here...
-	routeWithAuth.HandleFunc(pat.Post("/change_password"), handlers.ChangePassword)
-	routeWithAuth.HandleFunc(pat.Post("/change_profile"), handlers.ChangeProfile)
+	userRoute := goji.SubMux()
+	userRoute.Use(middlewares.VerifyToken)
+	userRoute.HandleFunc(pat.Post("/change_password"), handlers.ChangePassword)
+	userRoute.HandleFunc(pat.Post("/change_profile"), handlers.ChangeProfile)
 
-	rootRoute.Handle(pat.New("/*"), routeWithAuth)
+	promoRoute := goji.SubMux()
+	promoRoute.Use(middlewares.VerifyToken)
+	promoRoute.HandleFunc(pat.Post("/new"), handlers.NewPromo)
+
+	rootRoute.Handle(pat.New("/user/*"), userRoute)
+	rootRoute.Handle(pat.New("/promo/*"), promoRoute)
 	return rootRoute
 }
