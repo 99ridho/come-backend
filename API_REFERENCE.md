@@ -131,7 +131,7 @@ Parameter | Type | Remark
 #### Endpoint
 
 ```
-POST /change_password
+POST /user/change_password
 ```
 
 #### Request Header
@@ -161,6 +161,52 @@ Parameter | Type | Remark
 `message` | `string` | -
 
 #### Response if change password failed (no request body, old password incorrect)
+
+HTTP Status Code 400, 500
+
+Parameter | Type | Remark
+----------|------|--------
+`error_message` | `string` | -
+`error_code` | `int` | -
+
+## Change Profile
+
+### Request
+
+#### Endpoint
+
+```
+POST /user/change_profile
+```
+
+#### Request Header
+
+```
+Authorization: your_jwt_token_obtained_from_login
+Content-type: application/json
+```
+
+#### Request Parameter
+
+Parameter | Type | Required? | Remark
+----------|------|-----------|--------
+`username` | `string` | yes | -
+`full_name` | `string` | yes | -
+`gender` | `string` | yes | -
+
+### Response
+
+Response type : `Content-type: application/json`
+
+#### Response if change password success
+
+HTTP Status Code 200
+
+Parameter | Type | Remark
+----------|------|--------
+`message` | `string` | -
+
+#### Response if change password failed (no request body, and some server error)
 
 HTTP Status Code 400, 500
 
