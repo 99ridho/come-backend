@@ -14,6 +14,7 @@ import (
 type loginRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	FcmToken string `json:"fcm_token"`
 }
 
 type loginResponse struct {
@@ -34,12 +35,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	query := "select * from users where email=?"
 
 	if err := models.Dbm.SelectOne(&user, query, req.Email); err != nil {
-		errors.NewError("user not found", http.StatusInternalServerError).WriteTo(w)
+		errors.NewError("user not found", http.StatusUnauthorized).WriteTo(w)
 		return
 	}
 
 	if err := user.VerifyPassword(req.Password); err != nil {
-		errors.NewError("password incorrect", http.StatusInternalServerError).WriteTo(w)
+		errors.NewError("password incorrect", http.StatusUnauthorized).WriteTo(w)
 		return
 	}
 
@@ -52,7 +53,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	tokenString, err := token.SignedString([]byte(secret))
 
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		errors.NewError("can't sign your token", http.StatusInternalServerError).WriteTo(w)
+		return
+	}
+
+	user.FcmToken = req.FcmToken
+	if _, err := models.Dbm.Update(&user); err != nil {
+		errors.NewError("error logged in", http.StatusInternalServerError).WriteTo(w)
 		return
 	}
 

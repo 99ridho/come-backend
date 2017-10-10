@@ -9,5 +9,5 @@ func main() {
 		panic(err)
 	}
 
-	models.NewUser(1, "test", "test@mail.com", "123321", "Test Account", "male", "8912830812387192837")
+	models.NewUser("test", "test@mail.com", "123321", "Test Account", "male", "8912830812387192837")
 }
