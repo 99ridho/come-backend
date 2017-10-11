@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"goji.io/pat"
+
 	"github.com/99ridho/come-backend/errors"
 	"github.com/99ridho/come-backend/models"
 )
@@ -62,5 +64,19 @@ func FetchNearbyPromosFromMyLocation(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"data": promos,
+	})
+}
+
+func FetchPromoById(w http.ResponseWriter, r *http.Request) {
+	promoId := pat.Param(r, "id")
+	var promo models.Promo
+
+	if err := models.Dbm.SelectOne(&promo, "select * from promos where id=?", promoId); err != nil {
+		errors.NewError("promo not found", http.StatusBadRequest).WriteTo(w)
+		return
+	}
+
+	json.NewEncoder(w).Encode(map[string]models.Promo{
+		"data": promo,
 	})
 }
