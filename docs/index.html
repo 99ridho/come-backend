@@ -253,6 +253,15 @@
                   <li>
                     <a href="#nearby-promo" class="toc-h2 toc-link" data-title="Promo">Nearby Promo</a>
                   </li>
+                  <li>
+                    <a href="#find-promo-by-id" class="toc-h2 toc-link" data-title="Promo">Find Promo by ID</a>
+                  </li>
+                  <li>
+                    <a href="#change-my-promo-by-id" class="toc-h2 toc-link" data-title="Promo">Change My Promo by ID</a>
+                  </li>
+                  <li>
+                    <a href="#delete-my-promo-by-id" class="toc-h2 toc-link" data-title="Promo">Delete My Promo by ID</a>
+                  </li>
               </ul>
           </li>
       </div>
@@ -803,6 +812,247 @@ Content-type: application/json
 </tr>
 </tbody></table>
 <h3 id='http-status-code-2'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h2 id='find-promo-by-id'>Find Promo by ID</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Authorization: your_jwt_token
+</code></pre>
+<blockquote>
+<p>Response jika request sukses, contoh</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Name"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jalan MT. Haryono Malang"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.02111238</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">122.900012</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"McD Gratis Big Mac"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-05 12:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-05 12:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"allowed_gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"both"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"max_slot"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk mengambil detail promo berdasarkan ID Promo.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET /promo/:id</code></p>
+<h3 id='request-parameter-url'>Request Parameter URL</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>id promo yang ingin diambil</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code-3'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h2 id='change-my-promo-by-id'>Change My Promo by ID</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Authorization: your_jwt_token
+Content-type: application/json
+</code></pre>
+<blockquote>
+<p>Response jika request sukses, contoh</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update promo with id 3 successful"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk mengubah promo dari pengguna berdasarkan ID promo.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST /promo/:id</code></p>
+<h3 id='request-parameter-url'>Request Parameter URL</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>promo id yang ingin diubah</td>
+</tr>
+</tbody></table>
+<h3 id='request-parameter'>Request Parameter</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>double</td>
+<td>latitude posisi pengguna</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>double</td>
+<td>longitude posisi pengguna</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>start_date</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>end_date</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>allowed_gender</td>
+<td>string</td>
+<td>value &quot;male&quot;, &quot;female&quot; atau &quot;both&quot;</td>
+</tr>
+<tr>
+<td>max_slot</td>
+<td>int</td>
+<td>jumlah maksimal yg dapat join promo</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h2 id='delete-my-promo-by-id'>Delete My Promo by ID</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Authorization: your_jwt_token
+</code></pre>
+<blockquote>
+<p>Response jika request sukses, contoh</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delete promo with id 3 successful"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk menghapus promo dari pengguna berdasarkan ID promo.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>DELETE /promo/:id</code></p>
+<h3 id='request-parameter-url'>Request Parameter URL</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>id promo yang ingin dihapus</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code'>HTTP Status Code</h3>
 <table><thead>
 <tr>
 <th>Code</th>
