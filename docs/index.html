@@ -1,0 +1,834 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>COME REST API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;json&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="json">json</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+          </li>
+          <li>
+            <a href="#user" class="toc-h1 toc-link" data-title="User">User</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#login" class="toc-h2 toc-link" data-title="User">Login</a>
+                  </li>
+                  <li>
+                    <a href="#register" class="toc-h2 toc-link" data-title="User">Register</a>
+                  </li>
+                  <li>
+                    <a href="#change-password" class="toc-h2 toc-link" data-title="User">Change Password</a>
+                  </li>
+                  <li>
+                    <a href="#change-profile" class="toc-h2 toc-link" data-title="User">Change Profile</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#promo" class="toc-h1 toc-link" data-title="Promo">Promo</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#new-promo" class="toc-h2 toc-link" data-title="Promo">New Promo</a>
+                  </li>
+                  <li>
+                    <a href="#my-promo" class="toc-h2 toc-link" data-title="Promo">My Promo</a>
+                  </li>
+                  <li>
+                    <a href="#nearby-promo" class="toc-h2 toc-link" data-title="Promo">Nearby Promo</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Gak perlu intro lah ya, udah ngerti kan harus ngapain :p</p>
+<h1 id='authentication'>Authentication</h1>
+<p>Pake JSON Web Token, yang didapet pas login. Jadi, nanti harus ada header ini kalau mau ngakses endpoint yang ada authenticationnya:</p>
+
+<p><code>Authorization: jwt_yg_didapet_dari_login</code></p>
+<h1 id='user'>User</h1><h2 id='login'>Login</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Content-type: application/json
+</code></pre>
+<blockquote>
+<p>Response jika request sukses</p>
+
+<p>Token dipakai di next request yang butuh <code>Authorization</code> header.</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logged in"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_jwt_token"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk login biar dapet token.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST /login</code></p>
+<h3 id='request-parameter'>Request Parameter</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>fcm_token</td>
+<td>string</td>
+<td>fcm token didapat setelah insialisasi fcm di hp</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Tidak bisa login (unauthorized)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h2 id='register'>Register</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Content-type: application/json
+</code></pre>
+<blockquote>
+<p>Response jika request sukses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user registered"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk user dapat register ke sistem.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST /register</code></p>
+<h3 id='request-parameter'>Request Parameter</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>full_name</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>string</td>
+<td>&quot;female&quot; atau &quot;male&quot;</td>
+</tr>
+<tr>
+<td>fcm_token</td>
+<td>string</td>
+<td>fcm token didapat setelah insialisasi fcm di hp</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h2 id='change-password'>Change Password</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Authorization: your_jwt_token
+Content-type: application/json
+</code></pre>
+<blockquote>
+<p>Response jika request sukses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"password updated"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk ubah password pengguna.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST /user/change_password</code></p>
+<h3 id='request-parameter'>Request Parameter</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>old_password</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>new_password</td>
+<td>string</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h2 id='change-profile'>Change Profile</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Authorization: your_jwt_token
+Content-type: application/json
+</code></pre>
+<blockquote>
+<p>Response jika request sukses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"profile updated"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk ubah profil pengguna.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST /user/change_profile</code></p>
+<h3 id='request-parameter'>Request Parameter</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>full_name</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>string</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h1 id='promo'>Promo</h1><h2 id='new-promo'>New Promo</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Authorization: your_jwt_token
+Content-type: application/json
+</code></pre>
+<blockquote>
+<p>Response jika request sukses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"add promo success"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk membuat promo dari pengguna.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST /promo/new</code></p>
+<h3 id='request-parameter'>Request Parameter</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>double</td>
+<td>latitude posisi pengguna</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>double</td>
+<td>longitude posisi pengguna</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>start_date</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>end_date</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>allowed_gender</td>
+<td>string</td>
+<td>value &quot;male&quot;, &quot;female&quot; atau &quot;both&quot;</td>
+</tr>
+<tr>
+<td>max_slot</td>
+<td>int</td>
+<td>jumlah maksimal yg dapat join promo</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h2 id='my-promo'>My Promo</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Authorization: your_jwt_token
+</code></pre>
+<blockquote>
+<p>Response jika request sukses, contoh</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Name"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jalan MT. Haryono Malang"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.02111238</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">122.900012</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"McD Gratis Big Mac"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-05 12:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-05 12:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"allowed_gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"both"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"max_slot"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"McD"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jalan Bali"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.010212</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">122.905799128</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mcd promo"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01 12:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01 12:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"allowed_gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"female"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"max_slot"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk mengambil promo dari pengguna.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET /promo/my_promos</code></p>
+<h3 id='request-parameter'>Request Parameter</h3>
+<p>no parameter</p>
+<h3 id='http-status-code'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+<h2 id='nearby-promo'>Nearby Promo</h2>
+<blockquote>
+<p>Request Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>Authorization: your_jwt_token
+Content-type: application/json
+</code></pre>
+<blockquote>
+<p>Response jika request sukses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"McD"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jalan Bali"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.010212</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">122.905799128</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mcd promo"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01 12:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01 12:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"allowed_gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"female"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"max_slot"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"distance"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.00085867543623</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Name"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jalan MT. Haryono Malang"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.02111238</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">122.900012</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"McD Gratis Big Mac"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-05 12:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-05 12:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"allowed_gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"both"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"max_slot"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"distance"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.835992268492901</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response jika request gagal</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error_message"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">tergantung</span><span class="w"> </span><span class="err">errornya</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Digunakan untuk mengambil promo terdekat sejauh 5 km dari pengguna.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST /promo/nearby_promos</code></p>
+<h3 id='request-parameter-2'>Request Parameter</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>latitude</td>
+<td>double</td>
+<td>latitude posisi pengguna</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>double</td>
+<td>longitude posisi pengguna</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-code-2'>HTTP Status Code</h3>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Keterangan</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Login Sukses</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request (Tidak ada request data)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server Error</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="json">json</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
