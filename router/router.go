@@ -26,6 +26,7 @@ func NewRouter() *goji.Mux {
 	promoRoute.HandleFunc(pat.Get("/:id"), handlers.FetchPromoById)
 	promoRoute.HandleFunc(pat.Delete("/:id"), handlers.DeleteMyPromoById)
 	promoRoute.HandleFunc(pat.Post("/:id"), handlers.ChangeMyPromoById)
+	promoRoute.HandleFunc(pat.Post("/:id/join"), handlers.JoinPromo)
 
 	rootRoute.Handle(pat.New("/user/*"), userRoute)
 	rootRoute.Handle(pat.New("/promo/*"), promoRoute)
