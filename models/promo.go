@@ -58,5 +58,9 @@ func (p *Promo) Delete() error {
 		return err
 	}
 
+	if _, err := Dbm.Exec("delete from promo_attendees where promo_id=?", p.ID); err != nil {
+		return err
+	}
+
 	return nil
 }
