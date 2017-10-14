@@ -2,7 +2,7 @@ package models
 
 type Promo struct {
 	ID            int     `db:"id" json:"id"`
-	UserID        int     `db:"user_id" json:"user_id"`
+	UserID        int     `db:"user_id" json:"-"`
 	Name          string  `db:"name" json:"name"`
 	Address       string  `db:"address" json:"address"`
 	Latitude      float64 `db:"latitude" json:"latitude"`

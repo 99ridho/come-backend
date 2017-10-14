@@ -38,27 +38,30 @@ func FetchNearbyPromosFromMyLocation(w http.ResponseWriter, r *http.Request) {
 	// lat, lng, lat
 	query := `
 	SELECT 
-	*, 
+	p.*, u.full_name as owner_name, u.gender as owner_gender,
 	(
 	   6371 *
 	   acos(cos(radians(?)) * 
-	   cos(radians(latitude)) * 
-	   cos(radians(longitude) - 
+	   cos(radians(p.latitude)) * 
+	   cos(radians(p.longitude) - 
 	   radians(?)) + 
 	   sin(radians(?)) * 
-	   sin(radians(latitude)))
+	   sin(radians(p.latitude)))
 	) AS distance 
-	FROM promos
+	FROM promos p, users u
+	WHERE u.id = p.user_id
 	HAVING distance < 5
 	ORDER BY distance ASC
 	`
 
 	var promos []struct {
 		models.Promo
-		Distance float64 `json:"distance"`
+		Distance    float64 `db:"distance" json:"distance"`
+		OwnerName   string  `db:"owner_name" json:"owner_name"`
+		OwnerGender string  `db:"owner_gender" json:"owner_gender"`
 	}
 	if _, err := models.Dbm.Select(&promos, query, req.Latitude, req.Longitude, req.Latitude); err != nil {
-		errors.NewError(err.Error(), http.StatusInternalServerError).WriteTo(w)
+		errors.NewError("can't fetch nearby promo", http.StatusInternalServerError).WriteTo(w)
 		return
 	}
 
@@ -69,14 +72,21 @@ func FetchNearbyPromosFromMyLocation(w http.ResponseWriter, r *http.Request) {
 
 func FetchPromoById(w http.ResponseWriter, r *http.Request) {
 	promoId := pat.Param(r, "id")
-	var promo models.Promo
+	//var promo models.Promo
 
-	if err := models.Dbm.SelectOne(&promo, "select * from promos where id=?", promoId); err != nil {
-		errors.NewError("promo not found", http.StatusBadRequest).WriteTo(w)
+	var promo struct {
+		models.Promo
+		OwnerName   string `db:"owner_name" json:"owner_name"`
+		OwnerGender string `db:"owner_gender" json:"owner_gender"`
+	}
+
+	query := "select p.*, u.full_name as owner_name, u.gender as owner_gender from promos p, users u where p.id=? and u.id = p.user_id"
+	if err := models.Dbm.SelectOne(&promo, query, promoId); err != nil {
+		errors.NewError("can't fetch promo", http.StatusInternalServerError).WriteTo(w)
 		return
 	}
 
-	json.NewEncoder(w).Encode(map[string]models.Promo{
+	json.NewEncoder(w).Encode(map[string]interface{}{
 		"data": promo,
 	})
 }
