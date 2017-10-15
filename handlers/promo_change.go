@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"goji.io/pat"
 
@@ -48,7 +49,12 @@ func ChangeMyPromoById(w http.ResponseWriter, r *http.Request) {
 		promo.Description = req.Description
 	}
 	if req.EndDate != "" {
-		promo.EndDate = req.EndDate
+		endDate, err := time.Parse("2006-01-02 15:04", req.EndDate)
+		if err != nil {
+			errors.NewError("error parsing end time", http.StatusInternalServerError).WriteTo(w)
+			return
+		}
+		promo.EndDate = endDate
 	}
 	if req.Latitude != 0 {
 		promo.Latitude = req.Latitude
@@ -60,7 +66,12 @@ func ChangeMyPromoById(w http.ResponseWriter, r *http.Request) {
 		promo.Name = req.Name
 	}
 	if req.StartDate != "" {
-		promo.StartDate = req.StartDate
+		startDate, err := time.Parse("2006-01-02 15:04", req.StartDate)
+		if err != nil {
+			errors.NewError("error parsing start time", http.StatusInternalServerError).WriteTo(w)
+			return
+		}
+		promo.StartDate = startDate
 	}
 	promo.MaxSlot = req.MaxSlot
 	if err := promo.Update(); err != nil {
