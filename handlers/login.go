@@ -12,7 +12,7 @@ import (
 )
 
 type loginRequest struct {
-	Email    string `json:"email"`
+	Username string `json:"username"`
 	Password string `json:"password"`
 	FcmToken string `json:"fcm_token"`
 }
@@ -32,9 +32,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
-	query := "select * from users where email=?"
+	query := "select * from users where username=?"
 
-	if err := models.Dbm.SelectOne(&user, query, req.Email); err != nil {
+	if err := models.Dbm.SelectOne(&user, query, req.Username); err != nil {
 		errors.NewError("user not found", http.StatusUnauthorized).WriteTo(w)
 		return
 	}
