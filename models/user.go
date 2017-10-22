@@ -7,13 +7,13 @@ import (
 )
 
 type User struct {
-	ID       int    `db:"id"`
-	Username string `db:"username"`
-	Email    string `db:"email"`
-	Password string `db:"password"`
-	FullName string `db:"full_name"`
-	Gender   string `db:"gender"`
-	FcmToken string `db:"fcm_token"`
+	ID       int    `db:"id" json:"id"`
+	Username string `db:"username" json:"username"`
+	Email    string `db:"email" json:"email"`
+	Password string `db:"password" json:"-"`
+	FullName string `db:"full_name" json:"full_name"`
+	Gender   string `db:"gender" json:"gender"`
+	FcmToken string `db:"fcm_token" json:"fcm_token"`
 }
 
 func NewUser(username string, email string, password string, fullName string, gender string, fcmToken string) (*User, error) {

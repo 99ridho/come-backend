@@ -1,0 +1,16 @@
+package: github.com/99ridho/come-backend
+import:
+- package: github.com/dgrijalva/jwt-go
+- package: github.com/go-sql-driver/mysql
+- package: github.com/joho/godotenv
+- package: goji.io
+  subpackages:
+  - pat
+- package: golang.org/x/crypto
+  subpackages:
+  - bcrypt
+- package: gopkg.in/gorp.v2
+testImport:
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert

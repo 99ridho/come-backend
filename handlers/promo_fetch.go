@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"goji.io/pat"
@@ -88,5 +89,32 @@ func FetchPromoById(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"data": promo,
+	})
+}
+
+func FetchPromoByName(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		Query string `json:"query"`
+	}
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&req); err != nil {
+		errors.NewErrorWithStatusCode(http.StatusBadRequest).WriteTo(w)
+		return
+	}
+
+	var promos []struct {
+		models.Promo
+		OwnerName   string `db:"owner_name" json:"owner_name"`
+		OwnerGender string `db:"owner_gender" json:"owner_gender"`
+	}
+
+	query := "select p.*, u.full_name as owner_name, u.gender as owner_gender from promos p, users u where p.name LIKE ? AND u.id = p.user_id"
+	if _, err := models.Dbm.Select(&promos, query, fmt.Sprintf("%%%s%%", req.Query)); err != nil {
+		errors.NewError(err.Error(), http.StatusInternalServerError).WriteTo(w)
+		return
+	}
+
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"data": promos,
 	})
 }

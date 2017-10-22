@@ -18,8 +18,9 @@ type loginRequest struct {
 }
 
 type loginResponse struct {
-	Message string `json:"message"`
-	Token   string `json:"token"`
+	Message      string      `json:"message"`
+	Token        string      `json:"token"`
+	LoggedInUser models.User `json:"logged_in_user"`
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -64,7 +65,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(loginResponse{
-		Message: "logged in",
-		Token:   tokenString,
+		Message:      "logged in",
+		Token:        tokenString,
+		LoggedInUser: user,
 	})
 }
