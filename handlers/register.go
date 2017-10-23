@@ -9,12 +9,13 @@ import (
 )
 
 type registerRequest struct {
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	FullName string `json:"full_name"`
-	Gender   string `json:"gender"`
-	FcmToken string `json:"fcm_token"`
+	Username    string `json:"username"`
+	Email       string `json:"email"`
+	PhoneNumber string `json:"phone_number"`
+	Password    string `json:"password"`
+	FullName    string `json:"full_name"`
+	Gender      string `json:"gender"`
+	FcmToken    string `json:"fcm_token"`
 }
 
 type registerResponse struct {
@@ -29,7 +30,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if _, err := models.NewUser(reqData.Username, reqData.Email, reqData.Password, reqData.FullName, reqData.Gender, reqData.FcmToken); err != nil {
+	if _, err := models.NewUser(reqData.Username, reqData.Email, reqData.PhoneNumber, reqData.Password, reqData.FullName, reqData.Gender, reqData.FcmToken); err != nil {
 		errors.NewError("user already registered", http.StatusInternalServerError).WriteTo(w)
 		return
 	}
