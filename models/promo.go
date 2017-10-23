@@ -50,12 +50,12 @@ func NewPromo(userId int, name string, address string, latitude float64, longitu
 }
 
 func (p *Promo) User() (*User, error) {
-	var user *User
-	if err := Dbm.SelectOne(user, "select * from users where id=?", p.UserID); err != nil {
+	var user User
+	if err := Dbm.SelectOne(&user, "select * from users where id=?", p.UserID); err != nil {
 		return nil, err
 	}
 
-	return user, nil
+	return &user, nil
 }
 
 func (p *Promo) Update() error {
