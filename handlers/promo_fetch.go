@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"goji.io/pat"
 
@@ -116,5 +117,53 @@ func FetchPromoByName(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"data": promos,
+	})
+}
+
+func FetchJoinedPromo(w http.ResponseWriter, r *http.Request) {
+	myId := r.Context().Value("user_id").(int)
+
+	query := "select p.*, u.full_name as owner_name, u.gender as owner_gender from promos p, users u, promo_attendees pa where pa.user_id=? and u.id = p.user_id and pa.promo_id = p.id"
+
+	var promos []struct {
+		models.Promo
+		OwnerName   string `db:"owner_name" json:"owner_name"`
+		OwnerGender string `db:"owner_gender" json:"owner_gender"`
+	}
+
+	if _, err := models.Dbm.Select(&promos, query, myId); err != nil {
+		errors.NewError(err.Error(), http.StatusInternalServerError).WriteTo(w)
+		return
+	}
+
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"data": promos,
+	})
+}
+
+func FetchMyPromoAttendeeByPromoId(w http.ResponseWriter, r *http.Request) {
+	myId := r.Context().Value("user_id").(int)
+	promoId, _ := strconv.Atoi(pat.Param(r, "id"))
+
+	// query := "select * from users u, promo_attendees pa, promos p where u.id = pa.user_id and p.user_id = ? and pa.promo_id = p.id and p.id = ?"
+	query := "select * from promo_attendees"
+	var attendees []models.PromoAttendee
+	users := make([]*models.User, 0)
+
+	if _, err := models.Dbm.Select(&attendees, query); err != nil {
+		errors.NewError(err.Error(), http.StatusInternalServerError).WriteTo(w)
+		return
+	}
+
+	for _, a := range attendees {
+		promo, _ := a.Promo()
+		if promo.UserID == myId && promo.ID == promoId {
+			user, _ := a.User()
+			users = append(users, user)
+		}
+	}
+
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"data": users,
 	})
 }

@@ -20,19 +20,19 @@ func NewPromoAttendee(userId int, promoId int) (*PromoAttendee, error) {
 }
 
 func (p *PromoAttendee) User() (*User, error) {
-	var user *User
-	if err := Dbm.SelectOne(user, "select * from users where id=?", p.UserID); err != nil {
+	var user User
+	if err := Dbm.SelectOne(&user, "select * from users where id=?", p.UserID); err != nil {
 		return nil, err
 	}
 
-	return user, nil
+	return &user, nil
 }
 
 func (p *PromoAttendee) Promo() (*Promo, error) {
-	var promo *Promo
-	if err := Dbm.SelectOne(promo, "select * from promos where id=?", p.PromoID); err != nil {
+	var promo Promo
+	if err := Dbm.SelectOne(&promo, "select * from promos where id=?", p.PromoID); err != nil {
 		return nil, err
 	}
 
-	return promo, nil
+	return &promo, nil
 }

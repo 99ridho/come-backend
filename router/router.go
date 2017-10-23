@@ -24,6 +24,8 @@ func NewRouter() *goji.Mux {
 	promoRoute.Use(middlewares.VerifyToken)
 	promoRoute.HandleFunc(pat.Post("/new"), handlers.NewPromo)
 	promoRoute.HandleFunc(pat.Get("/my_promos"), handlers.FetchMyPromos)
+	promoRoute.HandleFunc(pat.Get("/my_promo/:id/attendees"), handlers.FetchMyPromoAttendeeByPromoId)
+	promoRoute.HandleFunc(pat.Get("/my_joined_promos"), handlers.FetchJoinedPromo)
 	promoRoute.HandleFunc(pat.Post("/nearby_promos"), handlers.FetchNearbyPromosFromMyLocation)
 	promoRoute.HandleFunc(pat.Post("/find"), handlers.FetchPromoByName)
 	promoRoute.HandleFunc(pat.Get("/:id"), handlers.FetchPromoById)

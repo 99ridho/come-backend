@@ -38,7 +38,7 @@ func JoinPromo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 3. check if already registered
+	// 3. check if already registered & check if promo is owned by theirself.
 	attendeeCountWithUserIdWantToJoin, countError := models.Dbm.SelectInt("select count(*) from promo_attendees where promo_id=? and user_id=?", promoId, userId)
 	if countError != nil {
 		errors.NewErrorWithStatusCode(http.StatusInternalServerError).WriteTo(w)
@@ -46,6 +46,10 @@ func JoinPromo(w http.ResponseWriter, r *http.Request) {
 	}
 	if int(attendeeCountWithUserIdWantToJoin) > 0 {
 		errors.NewError("already joined", http.StatusInternalServerError).WriteTo(w)
+		return
+	}
+	if userId == promo.UserID {
+		errors.NewError("can't join your own promo", http.StatusInternalServerError).WriteTo(w)
 		return
 	}
 
