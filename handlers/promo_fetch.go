@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"goji.io/pat"
 
@@ -40,7 +39,7 @@ func FetchNearbyPromosFromMyLocation(w http.ResponseWriter, r *http.Request) {
 	// lat, lng, lat
 	query := `
 	SELECT 
-	p.*, u.full_name as owner_name, u.gender as owner_gender,
+	p.*, u.full_name as owner_name, u.gender as owner_gender, u.role as owner_role,
 	(
 	   6371 *
 	   acos(cos(radians(?)) * 
@@ -52,6 +51,8 @@ func FetchNearbyPromosFromMyLocation(w http.ResponseWriter, r *http.Request) {
 	) AS distance 
 	FROM promos p, users u
 	WHERE u.id = p.user_id
+	AND u.role = "user"
+	AND (SELECT COUNT(*) FROM promo_attendees pa WHERE p.id = pa.promo_id) < p.max_slot
 	HAVING distance < 5
 	ORDER BY distance ASC
 	`
@@ -61,6 +62,7 @@ func FetchNearbyPromosFromMyLocation(w http.ResponseWriter, r *http.Request) {
 		Distance    float64 `db:"distance" json:"distance"`
 		OwnerName   string  `db:"owner_name" json:"owner_name"`
 		OwnerGender string  `db:"owner_gender" json:"owner_gender"`
+		OwnerRole   string  `db:"owner_role" json:"owner_role"`
 	}
 	if _, err := models.Dbm.Select(&promos, query, req.Latitude, req.Longitude, req.Latitude); err != nil {
 		errors.NewError("can't fetch nearby promo", http.StatusInternalServerError).WriteTo(w)
@@ -80,9 +82,10 @@ func FetchPromoById(w http.ResponseWriter, r *http.Request) {
 		models.Promo
 		OwnerName   string `db:"owner_name" json:"owner_name"`
 		OwnerGender string `db:"owner_gender" json:"owner_gender"`
+		OwnerRole   string `db:"owner_role" json:"owner_role"`
 	}
 
-	query := "select p.*, u.full_name as owner_name, u.gender as owner_gender from promos p, users u where p.id=? and u.id = p.user_id"
+	query := "select p.*, u.full_name as owner_name, u.gender as owner_gender, u.role as owner_role from promos p, users u where p.id=? and u.id = p.user_id"
 	if err := models.Dbm.SelectOne(&promo, query, promoId); err != nil {
 		errors.NewError("can't fetch promo", http.StatusInternalServerError).WriteTo(w)
 		return
@@ -107,9 +110,10 @@ func FetchPromoByName(w http.ResponseWriter, r *http.Request) {
 		models.Promo
 		OwnerName   string `db:"owner_name" json:"owner_name"`
 		OwnerGender string `db:"owner_gender" json:"owner_gender"`
+		OwnerRole   string `db:"owner_role" json:"owner_role"`
 	}
 
-	query := "select p.*, u.full_name as owner_name, u.gender as owner_gender from promos p, users u where p.name LIKE ? AND u.id = p.user_id"
+	query := "select p.*, u.full_name as owner_name, u.gender as owner_gender, u.role as owner_role from promos p, users u where p.name LIKE ? AND u.id = p.user_id"
 	if _, err := models.Dbm.Select(&promos, query, fmt.Sprintf("%%%s%%", req.Query)); err != nil {
 		errors.NewError(err.Error(), http.StatusInternalServerError).WriteTo(w)
 		return
@@ -123,12 +127,19 @@ func FetchPromoByName(w http.ResponseWriter, r *http.Request) {
 func FetchJoinedPromo(w http.ResponseWriter, r *http.Request) {
 	myId := r.Context().Value("user_id").(int)
 
-	query := "select p.*, u.full_name as owner_name, u.gender as owner_gender from promos p, users u, promo_attendees pa where pa.user_id=? and u.id = p.user_id and pa.promo_id = p.id"
+	query := `
+	SELECT p.*, u.full_name as owner_name, u.gender as owner_gender, u.role as owner_role 
+	FROM promos p
+	INNER JOIN promo_attendees pa ON p.id = pa.promo_id
+	INNER JOIN users u ON u.id = pa.user_id
+	WHERE pa.user_id = ?
+	`
 
 	var promos []struct {
 		models.Promo
 		OwnerName   string `db:"owner_name" json:"owner_name"`
 		OwnerGender string `db:"owner_gender" json:"owner_gender"`
+		OwnerRole   string `db:"owner_role" json:"owner_role"`
 	}
 
 	if _, err := models.Dbm.Select(&promos, query, myId); err != nil {
@@ -143,24 +154,20 @@ func FetchJoinedPromo(w http.ResponseWriter, r *http.Request) {
 
 func FetchMyPromoAttendeeByPromoId(w http.ResponseWriter, r *http.Request) {
 	myId := r.Context().Value("user_id").(int)
-	promoId, _ := strconv.Atoi(pat.Param(r, "id"))
+	promoId := pat.Param(r, "id")
 
-	// query := "select * from users u, promo_attendees pa, promos p where u.id = pa.user_id and p.user_id = ? and pa.promo_id = p.id and p.id = ?"
-	query := "select * from promo_attendees"
-	var attendees []models.PromoAttendee
-	users := make([]*models.User, 0)
+	query := `
+	SELECT u.id, u.username, u.email, u.phone_number, u.full_name, u.gender, u.fcm_token, u.role 
+	FROM users u 
+	INNER JOIN promo_attendees pa ON u.id = pa.user_id 
+	INNER JOIN promos p ON pa.promo_id = p.id
+	WHERE p.user_id = ? AND pa.promo_id = ?
+	`
 
-	if _, err := models.Dbm.Select(&attendees, query); err != nil {
-		errors.NewError(err.Error(), http.StatusInternalServerError).WriteTo(w)
+	var users []models.User
+	if _, err := models.Dbm.Select(&users, query, myId, promoId); err != nil {
+		errors.NewErrorWithStatusCode(http.StatusInternalServerError).WriteTo(w)
 		return
-	}
-
-	for _, a := range attendees {
-		promo, _ := a.Promo()
-		if promo.UserID == myId && promo.ID == promoId {
-			user, _ := a.User()
-			users = append(users, user)
-		}
 	}
 
 	json.NewEncoder(w).Encode(map[string]interface{}{

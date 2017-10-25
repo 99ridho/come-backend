@@ -15,9 +15,10 @@ type User struct {
 	FullName    string `db:"full_name" json:"full_name"`
 	Gender      string `db:"gender" json:"gender"`
 	FcmToken    string `db:"fcm_token" json:"fcm_token"`
+	Role        string `db:"role" json:"-"` // role: admin or user
 }
 
-func NewUser(username string, email string, phone string, password string, fullName string, gender string, fcmToken string) (*User, error) {
+func NewUser(username string, email string, phone string, password string, fullName string, gender string, fcmToken string, role string) (*User, error) {
 	user := &User{
 		Username:    username,
 		Email:       email,
@@ -25,6 +26,7 @@ func NewUser(username string, email string, phone string, password string, fullN
 		FullName:    fullName,
 		Gender:      gender,
 		FcmToken:    fcmToken,
+		Role:        role,
 	}
 	user.HashPassword(password)
 	err := Dbm.Insert(user)

@@ -30,7 +30,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if _, err := models.NewUser(reqData.Username, reqData.Email, reqData.PhoneNumber, reqData.Password, reqData.FullName, reqData.Gender, reqData.FcmToken); err != nil {
+	if _, err := models.NewUser(reqData.Username, reqData.Email, reqData.PhoneNumber, reqData.Password, reqData.FullName, reqData.Gender, reqData.FcmToken, "user"); err != nil {
 		errors.NewError("user already registered", http.StatusInternalServerError).WriteTo(w)
 		return
 	}

@@ -76,7 +76,7 @@ func JoinPromo(w http.ResponseWriter, r *http.Request) {
 	// 7. TODO - notify promo owner..
 	promoOwner, _ := promo.User()
 	println("Promo owner : ", promoOwner.FcmToken)
-	sendNotificationToPromoOwner(promoOwner, "Someone Joined", fmt.Sprintf("%s joined your promo named %s!", userWantToJoin.FullName, promo.Name))
+	sendNotificationToPromoOwner(promoOwner, "Someone Joined", fmt.Sprintf("%s (%s) joined your promo named %s!\nYou can reach him/her at %s.", userWantToJoin.FullName, userWantToJoin.Gender, promo.Name, userWantToJoin.PhoneNumber))
 
 	json.NewEncoder(w).Encode(map[string]string{
 		"message": "joining promo success",
