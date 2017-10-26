@@ -18,6 +18,7 @@ func NewRouter() *goji.Mux {
 	userRoute.HandleFunc(pat.Post("/change_password"), handlers.ChangePassword)
 	userRoute.HandleFunc(pat.Post("/change_profile"), handlers.ChangeProfile)
 	userRoute.HandleFunc(pat.Get("/my_profile"), handlers.FetchMyProfile)
+	userRoute.HandleFunc(pat.Post("/update_current_location"), handlers.UpdateUserCurrentLocation)
 	userRoute.HandleFunc(pat.Get("/:username/profile"), handlers.FetchUserProfileByUsername)
 
 	promoRoute := goji.SubMux()
