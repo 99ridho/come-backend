@@ -12,9 +12,11 @@ import (
 )
 
 type loginRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	FcmToken string `json:"fcm_token"`
+	Username  string  `json:"username"`
+	Password  string  `json:"password"`
+	FcmToken  string  `json:"fcm_token"`
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
 }
 
 type loginResponse struct {
@@ -59,6 +61,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user.FcmToken = req.FcmToken
+	user.CurrentLatitude = req.Latitude
+	user.CurrentLongitude = req.Longitude
 	if _, err := models.Dbm.Update(&user); err != nil {
 		errors.NewError("error logged in", http.StatusInternalServerError).WriteTo(w)
 		return

@@ -28,3 +28,7 @@ func (e *Error) WriteTo(w http.ResponseWriter) {
 	w.WriteHeader(e.Code)
 	json.NewEncoder(w).Encode(e)
 }
+
+func (e *Error) Error() string {
+	return e.Message
+}

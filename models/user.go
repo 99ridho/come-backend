@@ -7,26 +7,30 @@ import (
 )
 
 type User struct {
-	ID          int    `db:"id" json:"id"`
-	Username    string `db:"username" json:"username"`
-	Email       string `db:"email" json:"email"`
-	PhoneNumber string `db:"phone_number" json:"phone_number"`
-	Password    string `db:"password" json:"-"`
-	FullName    string `db:"full_name" json:"full_name"`
-	Gender      string `db:"gender" json:"gender"`
-	FcmToken    string `db:"fcm_token" json:"fcm_token"`
-	Role        string `db:"role" json:"-"` // role: admin or user
+	ID               int     `db:"id" json:"id"`
+	Username         string  `db:"username" json:"username"`
+	Email            string  `db:"email" json:"email"`
+	PhoneNumber      string  `db:"phone_number" json:"phone_number"`
+	Password         string  `db:"password" json:"-"`
+	FullName         string  `db:"full_name" json:"full_name"`
+	Gender           string  `db:"gender" json:"gender"`
+	FcmToken         string  `db:"fcm_token" json:"fcm_token"`
+	Role             string  `db:"role" json:"-"` // role: admin or user
+	CurrentLatitude  float64 `db:"current_latitude" json:"current_latitude"`
+	CurrentLongitude float64 `db:"current_longitude" json:"current_longitude"`
 }
 
-func NewUser(username string, email string, phone string, password string, fullName string, gender string, fcmToken string, role string) (*User, error) {
+func NewUser(username string, email string, phone string, password string, fullName string, gender string, fcmToken string, role string, lat float64, lon float64) (*User, error) {
 	user := &User{
-		Username:    username,
-		Email:       email,
-		PhoneNumber: phone,
-		FullName:    fullName,
-		Gender:      gender,
-		FcmToken:    fcmToken,
-		Role:        role,
+		Username:         username,
+		Email:            email,
+		PhoneNumber:      phone,
+		FullName:         fullName,
+		Gender:           gender,
+		FcmToken:         fcmToken,
+		Role:             role,
+		CurrentLatitude:  lat,
+		CurrentLongitude: lon,
 	}
 	user.HashPassword(password)
 	err := Dbm.Insert(user)
