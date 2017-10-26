@@ -174,3 +174,27 @@ func FetchMyPromoAttendeeByPromoId(w http.ResponseWriter, r *http.Request) {
 		"data": users,
 	})
 }
+
+func FetchAdminPromotedPromo(w http.ResponseWriter, r *http.Request) {
+	query := `
+	SELECT p.*, u.full_name as owner_name, u.gender as owner_gender, u.role as owner_role 
+	FROM promos p
+	INNER JOIN users u ON u.id = p.user_id
+	WHERE u.role = ?
+	`
+
+	var promos []struct {
+		models.Promo
+		OwnerName   string `db:"owner_name" json:"owner_name"`
+		OwnerGender string `db:"owner_gender" json:"owner_gender"`
+		OwnerRole   string `db:"owner_role" json:"owner_role"`
+	}
+	if _, err := models.Dbm.Select(&promos, query, "admin"); err != nil {
+		errors.NewErrorWithStatusCode(http.StatusInternalServerError).WriteTo(w)
+		return
+	}
+
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"data": promos,
+	})
+}
