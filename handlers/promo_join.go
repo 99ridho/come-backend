@@ -76,14 +76,14 @@ func JoinPromo(w http.ResponseWriter, r *http.Request) {
 	// 7. TODO - notify promo owner..
 	promoOwner, _ := promo.User()
 	println("Promo owner : ", promoOwner.FcmToken)
-	sendNotificationToPromoOwner(promoOwner, "Someone Joined", fmt.Sprintf("%s (%s) joined your promo named %s!\nYou can reach him/her at %s.", userWantToJoin.FullName, userWantToJoin.Gender, promo.Name, userWantToJoin.PhoneNumber))
+	sendNotificationToPromoOwner(promoOwner, &userWantToJoin, "Someone Joined", fmt.Sprintf("Someone joined your promo: %s!", promo.Name))
 
 	json.NewEncoder(w).Encode(map[string]string{
 		"message": "joining promo success",
 	})
 }
 
-func sendNotificationToPromoOwner(owner *models.User, title, message string) error {
+func sendNotificationToPromoOwner(owner, userWantToJoin *models.User, title, message string) error {
 	url := "https://onesignal.com/api/v1/notifications"
 
 	requestData := map[string]interface{}{
@@ -93,6 +93,11 @@ func sendNotificationToPromoOwner(owner *models.User, title, message string) err
 		},
 		"headings": map[string]string{
 			"en": title,
+		},
+		"data": map[string]string{
+			"attendee_fullname":     userWantToJoin.FullName,
+			"attendee_phone_number": userWantToJoin.PhoneNumber,
+			"attendee_gender":       userWantToJoin.Gender,
 		},
 		"include_player_ids": []string{owner.FcmToken},
 	}
