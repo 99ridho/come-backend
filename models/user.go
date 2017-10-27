@@ -18,6 +18,7 @@ type User struct {
 	Role             string  `db:"role" json:"-"` // role: admin or user
 	CurrentLatitude  float64 `db:"current_latitude" json:"current_latitude"`
 	CurrentLongitude float64 `db:"current_longitude" json:"current_longitude"`
+	Photo            string  `db:"photo" json:"photo"`
 }
 
 func NewUser(username string, email string, phone string, password string, fullName string, gender string, fcmToken string, role string, lat float64, lon float64) (*User, error) {
@@ -31,6 +32,7 @@ func NewUser(username string, email string, phone string, password string, fullN
 		Role:             role,
 		CurrentLatitude:  lat,
 		CurrentLongitude: lon,
+		Photo:            "-",
 	}
 	user.HashPassword(password)
 	err := Dbm.Insert(user)

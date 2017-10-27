@@ -98,6 +98,7 @@ func sendNotificationToPromoOwner(owner, userWantToJoin *models.User, title, mes
 			"attendee_fullname":     userWantToJoin.FullName,
 			"attendee_phone_number": userWantToJoin.PhoneNumber,
 			"attendee_gender":       userWantToJoin.Gender,
+			"type":                  "join_notification",
 		},
 		"include_player_ids": []string{owner.FcmToken},
 	}

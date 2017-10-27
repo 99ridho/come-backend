@@ -40,10 +40,11 @@ func NewPromo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	broadcastToNearbyUsers(req.Latitude, req.Longitude, "New Promo!", fmt.Sprintf("New promo nearby to you was discovered!"), map[string]string{
+	broadcastToNearbyUsers(userId, req.Latitude, req.Longitude, "New Promo!", fmt.Sprintf("New promo nearby to you was discovered!"), map[string]string{
 		"promo_name":        req.Name,
 		"promo_description": req.Description,
 		"promo_address":     req.Address,
+		"type":              "new_promo",
 	})
 
 	json.NewEncoder(w).Encode(map[string]string{
@@ -51,7 +52,7 @@ func NewPromo(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func broadcastToNearbyUsers(promoLatitude, promoLongitude float64, title, message string, data map[string]string) error {
+func broadcastToNearbyUsers(withoutUserId int, promoLatitude, promoLongitude float64, title, message string, data map[string]string) error {
 	url := "https://onesignal.com/api/v1/notifications"
 
 	query := `
@@ -65,10 +66,11 @@ func broadcastToNearbyUsers(promoLatitude, promoLongitude float64, title, messag
 		sin(radians(?)) * 
 		sin(radians(u.current_latitude)))
 	) < 5
+	AND u.id <> ?
 	`
 
 	var usersPlayerIds []string
-	if _, err := models.Dbm.Select(&usersPlayerIds, query, promoLatitude, promoLongitude, promoLatitude); err != nil {
+	if _, err := models.Dbm.Select(&usersPlayerIds, query, promoLatitude, promoLongitude, promoLatitude, withoutUserId); err != nil {
 		return err
 	}
 
