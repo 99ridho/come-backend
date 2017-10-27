@@ -22,6 +22,7 @@ type newPromoRequest struct {
 	EndDate       string  `json:"end_date"`       // yyyy-MM-dd HH:mm
 	AllowedGender string  `json:"allowed_gender"` // male, female or both
 	MaxSlot       int     `json:"max_slot"`
+	Photo         string  `json:"photo"` // base64
 }
 
 func NewPromo(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +35,7 @@ func NewPromo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	userId := r.Context().Value("user_id").(int)
-	if _, err := models.NewPromo(userId, req.Name, req.Address, req.Latitude, req.Longitude, req.Description, req.StartDate, req.EndDate, req.AllowedGender, req.MaxSlot); err != nil {
+	if _, err := models.NewPromo(userId, req.Name, req.Address, req.Latitude, req.Longitude, req.Description, req.StartDate, req.EndDate, req.AllowedGender, req.MaxSlot, req.Photo); err != nil {
 		errors.NewError("can't create new promo", http.StatusInternalServerError).WriteTo(w)
 		return
 	}

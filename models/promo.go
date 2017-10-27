@@ -16,9 +16,10 @@ type Promo struct {
 	EndDate       time.Time `db:"end_date" json:"end_date"`             // yyyy-MM-dd HH:mm
 	AllowedGender string    `db:"allowed_gender" json:"allowed_gender"` // male, female or both
 	MaxSlot       int       `db:"max_slot" json:"max_slot"`
+	Photo         string    `db:"photo" json:"photo"`
 }
 
-func NewPromo(userId int, name string, address string, latitude float64, longitude float64, description string, startDate string, endDate string, allowedGender string, maxSlot int) (*Promo, error) {
+func NewPromo(userId int, name string, address string, latitude float64, longitude float64, description string, startDate string, endDate string, allowedGender string, maxSlot int, photo string) (*Promo, error) {
 
 	parsedStartDate, err := time.Parse("2006-01-02 15:04", startDate)
 	if err != nil {
@@ -40,6 +41,7 @@ func NewPromo(userId int, name string, address string, latitude float64, longitu
 		EndDate:       parsedEndDate,
 		AllowedGender: allowedGender,
 		MaxSlot:       maxSlot,
+		Photo:         photo,
 	}
 
 	if err := Dbm.Insert(newPromo); err != nil {
