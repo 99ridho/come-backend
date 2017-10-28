@@ -128,7 +128,7 @@ func FetchJoinedPromo(w http.ResponseWriter, r *http.Request) {
 	myId := r.Context().Value("user_id").(int)
 
 	query := `
-	SELECT p.*, u.full_name as owner_name, u.gender as owner_gender, u.role as owner_role 
+	SELECT p.*, u.full_name as owner_name, u.gender as owner_gender, u.role as owner_role, u.phone_number as owner_phone_number
 	FROM promos p
 	INNER JOIN promo_attendees pa ON p.id = pa.promo_id
 	INNER JOIN users u ON u.id = pa.user_id
@@ -137,9 +137,10 @@ func FetchJoinedPromo(w http.ResponseWriter, r *http.Request) {
 
 	var promos []struct {
 		models.Promo
-		OwnerName   string `db:"owner_name" json:"owner_name"`
-		OwnerGender string `db:"owner_gender" json:"owner_gender"`
-		OwnerRole   string `db:"owner_role" json:"owner_role"`
+		OwnerName        string `db:"owner_name" json:"owner_name"`
+		OwnerGender      string `db:"owner_gender" json:"owner_gender"`
+		OwnerPhoneNumber string `db:"owner_phone_number" json:"owner_phone_number"`
+		OwnerRole        string `db:"owner_role" json:"owner_role"`
 	}
 
 	if _, err := models.Dbm.Select(&promos, query, myId); err != nil {
