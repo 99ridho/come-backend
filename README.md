@@ -1,4 +1,4 @@
-# COME Backend
+# COME Backend (Deprecated)
 
 ## Running
 
